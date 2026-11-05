@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio — GitLoom</title>
+  <meta name="description" content="Style your GitHub portfolio with a live preview, then download it as one HTML file.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23191c3a'/%3E%3Cpath d='M9 7v18M16 7v18M23 7v18' stroke='%23f3f4f6' stroke-width='2.5'/%3E%3Cpath d='M6 13h20M6 19h20' stroke='%23e3a72f' stroke-width='2.5'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/studio.css">
+</head>
+<body>
+  <header class="top">
+    <a class="logo" href="index.html" aria-label="GitLoom home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8"/><path class="w" d="M9 7v18M16 7v18M23 7v18"/><path class="f" d="M6 13h20M6 19h20"/></svg>
+      <span>GitLoom</span><em>Studio</em>
+    </a>
+    <div class="history">
+      <button id="undo" class="icon-btn" title="Undo (Ctrl+Z)" aria-label="Undo" disabled><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></svg></button>
+      <button id="redo" class="icon-btn" title="Redo (Ctrl+Shift+Z)" aria-label="Redo" disabled><svg viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h3"/></svg></button>
+    </div>
+    <div class="devices" role="radiogroup" aria-label="Preview size">
+      <button class="dev on" data-w="100%" role="radio" aria-checked="true" title="Desktop"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg></button>
+      <button class="dev" data-w="820px" role="radio" aria-checked="false" title="Tablet"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M11 18h2"/></svg></button>
+      <button class="dev" data-w="390px" role="radio" aria-checked="false" title="Phone"><svg viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg></button>
+    </div>
+    <div class="actions">
+      <button id="share" class="btn quiet">Copy share link</button>
+      <a id="open" class="btn quiet" href="portfolio.html" target="_blank" rel="noopener">Open full page</a>
+      <button id="download" class="btn primary">Download site</button>
+    </div>
+  </header>
+
+  <div class="app">
+    <aside class="panel" aria-label="Settings">
+      <nav class="tabs" role="tablist">
+        <button role="tab" class="tab on" aria-selected="true" data-tab="profile">Profile</button>
+        <button role="tab" class="tab" aria-selected="false" data-tab="design">Design</button>
+        <button role="tab" class="tab" aria-selected="false" data-tab="content">Content</button>
+        <button role="tab" class="tab" aria-selected="false" data-tab="projects">Projects</button>
+        <button role="tab" class="tab" aria-selected="false" data-tab="publish">Publish</button>
+      </nav>
+
+      <div class="panes">
+        <!-- PROFILE -->
+        <section class="pane on" data-pane="profile" role="tabpanel">
+          <div class="group">
+            <label class="lbl" for="user">GitHub username</label>
+            <form id="userForm" class="user-row">
+              <span class="at">@</span>
+              <input id="user" autocomplete="off" spellcheck="false" placeholder="octocat">
+              <button class="btn primary sm" type="submit">Load</button>
+            </form>
+            <p id="userStatus" class="status" role="status"></p>
+            <button type="button" id="demo" class="linkish">No account handy? Use the demo profile</button>
+          </div>
+
+          <div class="group">
+            <h3>Introduction</h3>
+            <label class="lbl" for="hl">Headline</label>
+            <input class="in" id="hl" data-k="hl" placeholder="I build small machines that see.">
+            <p class="hint">Leave empty to generate one from your top languages.</p>
+            <label class="lbl" for="bio">Bio</label>
+            <textarea class="in" id="bio" data-k="bio" rows="3" placeholder="Uses your GitHub bio when empty"></textarea>
+            <label class="lbl" for="loc">Location</label>
+            <input class="in" id="loc" data-k="loc" placeholder="Uses your GitHub location when empty">
+            <label class="switch"><input type="checkbox" data-k="photo"><span></span>Show my profile photo</label>
+            <label class="switch"><input type="checkbox" data-k="avail"><span></span>Show an availability badge</label>
+            <input class="in" data-k="availText" aria-label="Availability text" placeholder="Open to internships">
+          </div>
+
+          <div class="group">
+            <h3>Contact</h3>
+            <label class="lbl" for="em">Email</label>
+            <input class="in" id="em" data-k="em" type="email" placeholder="you@example.com">
+            <div class="two">
+              <div><label class="lbl" for="li">LinkedIn</label><input class="in" id="li" data-k="li" placeholder="your-name"></div>
+              <div><label class="lbl" for="x">X</label><input class="in" id="x" data-k="x" placeholder="handle"></div>
+            </div>
+            <label class="lbl" for="web">Website</label>
+            <input class="in" id="web" data-k="web" placeholder="yourname.dev">
+            <label class="lbl" for="resume">Résumé link</label>
+            <input class="in" id="resume" data-k="resume" placeholder="Link to a PDF on Drive or your site">
+          </div>
+        </section>
+
+        <!-- DESIGN -->
+        <section class="pane" data-pane="design" role="tabpanel">
+          <div class="group">
+            <h3>Template</h3>
+            <div id="tpls" class="tpls" role="radiogroup" aria-label="Template"></div>
+          </div>
+          <div class="group">
+            <h3>Accent colour</h3>
+            <div class="colors">
+              <label class="picker"><input type="color" id="accent" aria-label="Custom accent colour"><span></span></label>
+              <div id="swatches" class="swatches"></div>
+            </div>
+            <button type="button" id="tplColor" class="linkish">Reset to the template's colour</button>
+          </div>
+          <div class="group">
+            <h3>Headline font</h3>
+            <div id="fonts" class="fonts" role="radiogroup" aria-label="Headline font"></div>
+          </div>
+          <div class="group">
+            <h3>Behaviour</h3>
+            <label class="switch"><input type="checkbox" data-k="motion"><span></span>Animations</label>
+            <label class="switch"><input type="checkbox" data-k="cmdk"><span></span>Quick menu (Ctrl+K)</label>
+            <label class="switch"><input type="checkbox" data-k="credit"><span></span>"Made with GitLoom" in the footer</label>
+          </div>
+        </section>
+
+        <!-- CONTENT -->
+        <section class="pane" data-pane="content" role="tabpanel">
+          <div class="group">
+            <h3>Sections</h3>
+            <p class="hint">Turn sections on and drag them into the order you want.</p>
+            <ol id="sections" class="sortable"></ol>
+          </div>
+          <div class="group">
+            <h3>Experience</h3>
+            <div id="exp"></div>
+            <button type="button" id="addExp" class="btn quiet sm">Add an entry</button>
+          </div>
+          <div class="group">
+            <h3>Skills</h3>
+            <div class="tag-input" id="skillBox">
+              <ul id="skills"></ul>
+              <input id="skillIn" placeholder="Type a skill and press Enter" aria-label="Add a skill">
+            </div>
+          </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section class="pane" data-pane="projects" role="tabpanel">
+          <div class="group">
+            <h3>Automatic selection</h3>
+            <div class="two">
+              <div><label class="lbl" for="sort">Order by</label>
+                <select class="in" id="sort" data-k="sort"><option value="stars">Most stars</option><option value="recent">Recently updated</option><option value="name">Name</option></select></div>
+              <div><label class="lbl" for="max">How many</label>
+                <div class="range"><input type="range" id="max" data-k="max" min="3" max="24" step="1"><output id="maxOut"></output></div></div>
+            </div>
+            <label class="switch"><input type="checkbox" data-k="forks"><span></span>Include forks</label>
+            <label class="switch"><input type="checkbox" data-k="archived"><span></span>Include archived repos</label>
+          </div>
+          <div class="group">
+            <div class="row-head"><h3>Pick by hand</h3><button type="button" id="clearPicks" class="linkish" hidden>Clear picks</button></div>
+            <p class="hint" id="pickHint">Tick repos to feature them in exactly this order. The first one gets the large card.</p>
+            <label class="search"><input id="repoQ" placeholder="Filter repositories" aria-label="Filter repositories"></label>
+            <ol id="picked" class="sortable picked"></ol>
+            <ul id="repos" class="repos"></ul>
+          </div>
+        </section>
+
+        <!-- PUBLISH -->
+        <section class="pane" data-pane="publish" role="tabpanel">
+          <div class="group">
+            <h3>Get your site</h3>
+            <div class="stack">
+              <button type="button" class="big-btn" id="dl2"><b>Download site</b><span>One index.html file with everything inside</span></button>
+              <button type="button" class="big-btn" id="pdf"><b>Save as PDF</b><span>A clean one-colour résumé from the same data</span></button>
+              <button type="button" class="big-btn" id="share2"><b>Copy share link</b><span>Anyone with the link sees your live portfolio</span></button>
+            </div>
+          </div>
+          <div class="group">
+            <h3>Publish on GitHub Pages</h3>
+            <ol class="steps">
+              <li>Create a repository named <code id="pagesRepo">username.github.io</code>.</li>
+              <li>Upload the downloaded <code>index.html</code> to it.</li>
+              <li>Open <b>Settings → Pages</b>, set the source to the <code>main</code> branch and save.</li>
+              <li>Your site goes live at <a id="pagesUrl" href="#" target="_blank" rel="noopener">https://username.github.io</a> in about a minute.</li>
+            </ol>
+            <p class="hint">Netlify and Vercel work too: drag the file onto Netlify Drop.</p>
+          </div>
+          <div class="group">
+            <h3>Saved designs</h3>
+            <form id="presetForm" class="user-row">
+              <input id="presetName" placeholder="Name this design" aria-label="Design name" maxlength="40">
+              <button class="btn quiet sm" type="submit">Save</button>
+            </form>
+            <ul id="presets" class="presets"></ul>
+            <div class="two">
+              <button type="button" id="exportCfg" class="btn quiet sm">Export settings</button>
+              <label class="btn quiet sm file">Import settings<input type="file" id="importCfg" accept="application/json,.json"></label>
+            </div>
+          </div>
+          <div class="group">
+            <h3>GitHub access token <small>optional</small></h3>
+            <p class="hint">GitHub allows 60 anonymous requests an hour. A fine-grained token with no permissions raises that to 5,000. It stays in this browser and is never put in links or downloads.</p>
+            <div class="user-row">
+              <input id="token" type="password" autocomplete="off" placeholder="github_pat_…" aria-label="GitHub token">
+              <button type="button" class="btn quiet sm" id="saveToken">Save</button>
+            </div>
+            <button type="button" id="clearCache" class="linkish">Refresh GitHub data</button>
+          </div>
+        </section>
+      </div>
+    </aside>
+
+    <main class="stage">
+      <div class="frame-wrap">
+        <div class="frame" id="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span id="frameUrl">yourname.github.io</span></div>
+          <iframe id="preview" title="Portfolio preview" src="portfolio.html?embed=1"></iframe>
+          <div class="empty-state" id="empty">
+            <svg viewBox="0 0 120 80" aria-hidden="true"><g stroke-width="3" fill="none"><path d="M20 6v68M40 6v68M60 6v68M80 6v68M100 6v68" stroke="#c9cdd9"/><path d="M8 24h104" stroke="#3b5bdb"/><path d="M8 40h104" stroke="#e3a72f"/><path d="M8 56h104" stroke="#c8323c"/></g></svg>
+            <h2>Your site appears here</h2>
+            <p>Enter a GitHub username on the left, or try the demo profile.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/demo.js"></script>
+  <script src="js/github.js"></script>
+  <script src="js/studio.js"></script>
+</body>
+</html>

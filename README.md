@@ -1,137 +1,90 @@
-# 🧵 GitLoom — Weave Your GitHub Into a Portfolio
+# GitLoom
 
-**Turn your GitHub profile into a beautiful personal portfolio website — in just a few clicks.**
+**Your GitHub, woven into a website.**
 
-GitLoom is a lightweight, customizable GitHub portfolio generator that transforms your public GitHub profile information into a personalized portfolio website. Simply enter your GitHub username, choose a design template, customize your accent color and sections, and generate a ready-to-publish HTML portfolio.
+Paste a GitHub username and GitLoom turns your public profile into a portfolio site. Style it in a live studio, pick from ten templates, then download one `index.html` you can host free on GitHub Pages, Netlify or Vercel.
 
-No complicated setup. No manual project listing. Just your GitHub profile, woven into a website.
+No sign-up, no server, no build step. Everything runs in the browser.
 
-## ✨ Features
+## Features
 
-- **GitHub Profile Integration:** Fetches public GitHub profile information, repositories, and programming languages.
-- **Multiple Design Templates:** Choose from three unique portfolio styles:
-  - Editorial – Minimal, elegant, paper-inspired design.
-  - Midnight – Modern dark theme with glowing accents.
-  - Sunrise – Bold, vibrant, colorful design.
-- **Custom Accent Colors:** Personalize your portfolio using a color picker or predefined color palettes.
-- **Custom Profile Details:** Add your headline, email, LinkedIn, X (Twitter), and personal website.
-- **Flexible Sections:** Enable or disable About, Projects, Languages, and Contact sections.
-- **Profile Photo Control:** Choose whether to display your GitHub profile picture.
-- **HTML Portfolio Generation:** Generate a standalone portfolio HTML file that can be hosted online.
-- **Free Hosting:** Publish your generated portfolio using GitHub Pages.
+### Pulled from GitHub
+- **Projects** with stars, forks, topics, live-site links and "updated 3 days ago"
+- **Languages** measured by bytes of code across your top repos, shown as a ring chart and bars
+- **Activity** heatmap and feed from your last 90 days of public events
+- **Profile README** (the `username/username` repo) rendered with a strict sanitizer
+- Pagination up to 300 repos, 30-minute cache, clear messages for typos and rate limits
 
-## 🛠️ Tech Stack
+### Studio (`studio.html`)
+- **Live preview** in desktop, tablet and phone sizes
+- **10 templates**: Editorial, Midnight, Sunrise, Terminal, Bento, Brutalist, Swiss, Aurora, Blueprint, Zen
+- **Any accent colour** plus 15 presets, with readable text colour picked automatically
+- **9 headline fonts**
+- **Drag-to-reorder sections**: About, Profile README, Projects, Languages, Activity, Experience, Skills, Contact
+- **Pick repos by hand** and drag their order, or sort automatically by stars, recency or name
+- **Experience timeline** and **skills** you add yourself
+- **Availability badge**, résumé link, email, LinkedIn, X, website
+- **Undo / redo** (Ctrl+Z, Ctrl+Shift+Z), autosaved drafts, **saved designs**, import/export settings as JSON
+- Optional **GitHub token** (stored only in your browser) to raise the API limit from 60 to 5,000 requests an hour
 
-| Technology | Purpose |
-|---|---|
-| HTML5 | Website structure |
-| CSS3 | Styling and responsive layouts |
-| JavaScript | Interactive functionality and portfolio generation |
-| GitHub API | Fetching public GitHub profile and repository data |
-| Google Fonts | Typography using Fraunces and JetBrains Mono |
-| GitHub Pages | Portfolio hosting |
+### The generated site
+- One self-contained `index.html`: styles and script inlined
+- SEO and social tags (Open Graph, Twitter card, JSON-LD `Person`), avatar favicon
+- **Ctrl+K quick menu** to jump to sections, open projects, copy email
+- Project **filter by language** and **search**
+- **Print / Save as PDF** gives a clean one-colour résumé in any template
+- Phone layouts, keyboard focus styles, `prefers-reduced-motion` respected, animation off switch
+- **Share links**: the whole design is encoded in the URL (`portfolio.html#c=…`) and rebuilds from live data
 
-## 🚀 How It Works
-
-GitLoom follows a simple three-step workflow:
-
-**01. Paste**
-
-Enter your GitHub username. GitLoom retrieves your publicly available GitHub profile and repository information.
-
-**02. Style**
-
-Choose your preferred template, customize the accent color, add personal details, and select which portfolio sections to display.
-
-**03. Publish**
-
-Generate and download your portfolio HTML file. Host it using GitHub Pages or any static website hosting service.
-
-## 📂 Project Structure
+## Project structure
 
 ```text
 GitLoom/
-│
-├── index.html
-├── portfolio.html
-│
+├── index.html          Landing page (live loom hero + template gallery)
+├── studio.html         The builder
+├── portfolio.html      Renders a portfolio from a config (also used for previews)
 ├── css/
 │   ├── landing.css
-│   └── portfolio.css
-│
-├── js/
-│   ├── landing.js
-│   └── portfolio.js
-│
-└── README.md
+│   ├── studio.css
+│   └── portfolio.css   Shared base + all 10 templates + print styles
+└── js/
+    ├── config.js       Templates, fonts, sections, defaults, URL encode/decode
+    ├── github.js       GitHub API, caching, analysis
+    ├── render.js       Builds the portfolio HTML (one markup, every template)
+    ├── demo.js         Fictional demo profile, works offline
+    ├── portfolio.js    Effects runtime, export, studio messaging
+    ├── studio.js       Studio controls, undo/redo, presets
+    └── landing.js      Loom animation, gallery
 ```
 
-*Note: Update the structure above if your actual project contains additional files or folders.*
-
-## ⚙️ Getting Started
-
-### 1. Clone the Repository
+## Run it locally
 
 ```bash
 git clone https://github.com/HemashreeVI/GitLoom.git
-```
-
-### 2. Navigate to the Project Directory
-
-```bash
 cd GitLoom
 ```
 
-### 3. Run the Project
+Open the folder in VS Code and start **Live Server** (right-click `index.html` → *Open with Live Server*).
+A local server is needed for **Download site**, because the export reads `css/portfolio.css`.
 
-Open `index.html` in your browser.
+## Publish your portfolio
 
-For the best development experience, use the VS Code Live Server extension.
+1. In the studio, click **Download site** to get `index.html`.
+2. Create a repository named `your-username.github.io`.
+3. Upload `index.html`, then open **Settings → Pages** and choose the `main` branch.
+4. Your site is live at `https://your-username.github.io`.
 
-### 4. Generate Your Portfolio
+## Add a template
 
-1. Enter your GitHub username.
-2. Select a portfolio template.
-3. Choose your preferred accent color.
-4. Enter your additional profile details.
-5. Select the sections you want.
-6. Click **Weave my site**.
+1. Add an entry to `TEMPLATES` in `js/config.js` (`id`, `name`, `note`, `accent`).
+2. Add a `body[data-t="your-id"] { … }` block in `css/portfolio.css`. Set the variables
+   (`--bg --fg --mut --line --card --card-b --fd --fb --r --hd-w --hd-ls`) and override any component.
+3. Add a `.mini[data-t="your-id"]` thumbnail in `css/studio.css`.
 
-## 🎨 Available Templates
+## Tech
 
-| Template | Design Style |
-|---|---|
-| Editorial | Minimal, elegant, serif typography |
-| Midnight | Dark, modern, glowing accents |
-| Sunrise | Vibrant, bold, colorful aesthetic |
+HTML, CSS and vanilla JavaScript. GitHub REST API. [marked](https://github.com/markedjs/marked) for README rendering (falls back to a built-in parser). Google Fonts.
 
-## 🌐 Deployment
+## Author
 
-Generated portfolios can be deployed using:
-
-- GitHub Pages
-- Netlify
-- Vercel
-- Any static website hosting platform
-
-## 🔮 Future Enhancements
-
-- Live portfolio preview before downloading.
-- Additional portfolio templates and layouts.
-- More customization options for fonts and layouts.
-- GitHub contribution graph integration.
-- Downloadable portfolio themes.
-- Custom domain integration.
-- Enhanced mobile responsiveness.
-
-## 👩‍💻 Author
-
-**Hemashree V. I.**
-
-- GitHub: [@HemashreeVI](https://github.com/HemashreeVI)
-
----
-
-⭐ If you find GitLoom useful, consider giving this repository a star!
-
-**GitLoom — Your GitHub. Your Story. Your Portfolio.**
+**Hemashree V. I.** · [@HemashreeVI](https://github.com/HemashreeVI)

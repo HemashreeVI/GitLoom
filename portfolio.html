@@ -3,22 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio</title>
+  <title>Portfolio — GitLoom</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;600;800&family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Inter+Tight:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500;700&family=Karla:wght@400;500;700&family=Manrope:wght@400;500;700;800&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Sora:wght@300;400;600;700&family=Space+Grotesk:wght@400;500;700&family=Syne:wght@600;700;800&display=swap">
   <link rel="stylesheet" href="css/portfolio.css">
 </head>
 <body data-t="editorial">
   <div class="progress"></div>
-  <div class="glow"></div>
-  <div id="app"><p class="loading">Weaving your site…</p></div>
-  <div class="toolbar">
-    <a href="index.html">← Edit</a>
-    <button id="copy">Copy link</button>
-    <button id="export">Download site</button>
+  <div class="fx-bg"></div>
+  <div id="app"><div class="loading"><span></span><p>Weaving your site</p></div></div>
+
+  <div class="toolbar" hidden>
+    <a data-act="edit" href="studio.html">Edit in studio</a>
+    <button data-act="copy">Copy link</button>
+    <button data-act="pdf">Save as PDF</button>
+    <button data-act="download" class="primary">Download site</button>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/demo.js"></script>
   <script src="js/github.js"></script>
+  <script src="js/render.js"></script>
   <script src="js/portfolio.js"></script>
 </body>
 </html>

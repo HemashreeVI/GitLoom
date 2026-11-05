@@ -3,78 +3,159 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gitloom — turn your GitHub into a website</title>
+  <title>GitLoom — turn your GitHub into a portfolio website</title>
+  <meta name="description" content="Paste a GitHub username and get a portfolio site: ten templates, live studio, your repos, languages and activity, exported as one HTML file you can host free.">
+  <meta property="og:title" content="GitLoom — your GitHub, woven into a website">
+  <meta property="og:description" content="Ten templates, a live studio, and a single-file export you can host free on GitHub Pages.">
+  <meta name="theme-color" content="#191c3a">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23191c3a'/%3E%3Cpath d='M9 7v18M16 7v18M23 7v18' stroke='%23f3f4f6' stroke-width='2.5'/%3E%3Cpath d='M6 13h20M6 19h20' stroke='%23e3a72f' stroke-width='2.5'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="css/landing.css">
 </head>
 <body>
-  <header class="nav">
-    <a class="logo" href="index.html">gitloom<span>.</span></a>
-    <nav><a href="#how">How it works</a><a href="portfolio.html?user=octocat&t=midnight">Live demo</a></nav>
+  <header class="nav" id="nav">
+    <a class="logo" href="index.html" aria-label="GitLoom home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8"/><path class="w" d="M9 7v18M16 7v18M23 7v18"/><path class="f" d="M6 13h20M6 19h20"/></svg>
+      GitLoom
+    </a>
+    <nav aria-label="Main">
+      <a href="#templates">Templates</a>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://github.com/HemashreeVI/GitLoom" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <a class="btn ink sm" href="studio.html">Open the studio</a>
   </header>
 
-  <main class="wrap">
+  <main>
+    <!-- Hero: the loom weaves a row for every character you type -->
     <section class="hero">
-      <p class="tag">Paste a username. Get a portfolio.</p>
-      <h1>Your GitHub,<br><em>woven</em> into a website.</h1>
-      <p class="lede">Gitloom reads your public repos and languages, drops them into a template you can style, and gives you a site file to publish anywhere.</p>
+      <canvas id="loom" aria-hidden="true"></canvas>
+      <div class="hero-copy">
+        <h1>Your GitHub, woven into a website.</h1>
+        <p class="lede">Paste a username. GitLoom reads your public repos, languages and activity, and lays them into one of ten templates. Style it in the studio, then download a single HTML file you can host anywhere for free.</p>
+        <form class="weave" id="heroForm" autocomplete="off">
+          <label class="weave-field">
+            <span class="pre">github.com/</span>
+            <input id="heroUser" name="user" placeholder="your-username" spellcheck="false" aria-label="GitHub username" maxlength="39">
+          </label>
+          <button class="btn ink" type="submit">Weave my site</button>
+        </form>
+        <p class="fine">No sign-up and nothing to install. <a href="studio.html?user=__demo">See it with a demo profile</a>.</p>
+      </div>
     </section>
 
-    <form id="form" class="builder">
-      <label class="field big"><span class="at">@</span>
-        <input name="user" placeholder="your-github-username" autocomplete="off" required>
-      </label>
+    <!-- Proof strip -->
+    <section class="strip" aria-label="At a glance">
+      <p><b>10</b> templates</p>
+      <p><b>1</b> HTML file to host</p>
+      <p><b>0</b> accounts to create</p>
+      <p><b>8</b> sections you can reorder</p>
+    </section>
 
-      <h3>Template</h3>
-      <div class="tpls">
-        <label class="tpl"><input type="radio" name="t" value="editorial" checked>
-          <span class="sw" style="background:#f2efe8;color:#14130f;font-family:Fraunces,serif">Aa</span><b>Editorial</b><small>Paper, serif, hard shadows</small></label>
-        <label class="tpl"><input type="radio" name="t" value="midnight">
-          <span class="sw" style="background:#07090d;color:#4de2f0">Aa</span><b>Midnight</b><small>Dark, glow, big type</small></label>
-        <label class="tpl"><input type="radio" name="t" value="sunrise">
-          <span class="sw" id="sunsw" style="background:#ff4d2e;color:#fff">Aa</span><b>Sunrise</b><small>Bold color hero</small></label>
+    <!-- Templates -->
+    <section class="templates" id="templates">
+      <div class="sec-head">
+        <h2>Ten templates. Same data, different cloth.</h2>
+        <p>Every template below is the real renderer running on a demo profile. Pick one to open it in the studio with your username.</p>
       </div>
-
-      <h3>Accent color</h3>
-      <div class="colors">
-        <input type="color" name="a" id="accent" value="#ff4d2e">
-        <button type="button" data-c="#ff4d2e" style="background:#ff4d2e"></button>
-        <button type="button" data-c="#2f6fed" style="background:#2f6fed"></button>
-        <button type="button" data-c="#2a9d6f" style="background:#2a9d6f"></button>
-        <button type="button" data-c="#e0a800" style="background:#e0a800"></button>
-        <button type="button" data-c="#d6336c" style="background:#d6336c"></button>
-        <button type="button" data-c="#22d3ee" style="background:#22d3ee"></button>
+      <div class="gallery" id="gallery"></div>
+      <div class="gallery-nav">
+        <button type="button" class="round" data-dir="-1" aria-label="Previous templates"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button type="button" class="round" data-dir="1" aria-label="Next templates"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
       </div>
+    </section>
 
-      <h3>Details <small>(all optional)</small></h3>
-      <div class="two">
-        <label class="field"><input name="hl" placeholder="Headline, e.g. Builder of tiny tools"></label>
-        <label class="field"><input name="em" placeholder="Email"></label>
-        <label class="field"><input name="li" placeholder="LinkedIn slug, e.g. your-name"></label>
-        <label class="field"><input name="x" placeholder="X / Twitter handle"></label>
-        <label class="field full"><input name="web" placeholder="Website URL"></label>
+    <!-- Features -->
+    <section class="features" id="features">
+      <div class="sec-head">
+        <h2>Everything a portfolio needs, already threaded through.</h2>
       </div>
-
-      <h3>Sections</h3>
-      <div class="checks">
-        <label><input type="checkbox" name="show" value="about" checked> About</label>
-        <label><input type="checkbox" name="show" value="projects" checked> Projects</label>
-        <label><input type="checkbox" name="show" value="languages" checked> Languages</label>
-        <label><input type="checkbox" name="show" value="contact" checked> Contact</label>
-        <label><input type="checkbox" name="photo" checked> Show my photo</label>
+      <div class="feat-grid">
+        <article class="feat">
+          <h3>Pulled from GitHub</h3>
+          <ul>
+            <li><b>Projects</b> with stars, forks, topics, live-site links and when they were last updated</li>
+            <li><b>Languages</b> measured by bytes of code, shown as a ring and bars</li>
+            <li><b>Activity</b> heatmap and feed from your last 90 days</li>
+            <li><b>Profile README</b> rendered safely, images and all</li>
+          </ul>
+        </article>
+        <article class="feat">
+          <h3>Styled by you</h3>
+          <ul>
+            <li><b>Ten templates</b>, any accent colour, nine headline fonts</li>
+            <li><b>Drag sections</b> into the order you want, hide the rest</li>
+            <li><b>Pick repos by hand</b> or sort by stars or recency</li>
+            <li><b>Experience and skills</b> you add yourself</li>
+          </ul>
+        </article>
+        <article class="feat">
+          <h3>Ready to ship</h3>
+          <ul>
+            <li><b>One index.html</b> with styles and scripts inside</li>
+            <li><b>Search and social tags</b> so links preview with your photo</li>
+            <li><b>PDF résumé</b> printed from the same data</li>
+            <li><b>Share links</b> that rebuild your site from the URL</li>
+          </ul>
+        </article>
+        <article class="feat">
+          <h3>Finished properly</h3>
+          <ul>
+            <li><b>Ctrl+K quick menu</b> to jump to any project or section</li>
+            <li><b>Phone layouts</b> for every template</li>
+            <li><b>Respects reduced motion</b>, with an off switch for animation</li>
+            <li><b>Undo and redo</b>, saved designs, import and export</li>
+          </ul>
+        </article>
       </div>
+    </section>
 
-      <button class="go" type="submit">Weave my site →</button>
-    </form>
+    <!-- Steps -->
+    <section class="steps" id="how">
+      <div class="sec-head"><h2>From username to live site in three steps.</h2></div>
+      <ol>
+        <li><span class="n">1</span><h3>Paste your username</h3><p>GitLoom fetches your public profile in the browser. Nothing is stored on a server.</p></li>
+        <li><span class="n">2</span><h3>Style it in the studio</h3><p>Change template, colour, sections and projects and watch the preview update as you go.</p></li>
+        <li><span class="n">3</span><h3>Download and publish</h3><p>Upload the file to a <code>username.github.io</code> repo. The studio walks you through it.</p></li>
+      </ol>
+    </section>
 
-    <section id="how" class="how">
-      <div><b>01</b><h4>Paste</h4><p>Type your GitHub username. No sign-up, public data only.</p></div>
-      <div><b>02</b><h4>Style</h4><p>Pick a template, accent color and the sections you want.</p></div>
-      <div><b>03</b><h4>Publish</h4><p>Download one HTML file and host it free on GitHub Pages.</p></div>
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+      <div class="sec-head"><h2>Questions</h2></div>
+      <div class="qs">
+        <details><summary>Is it really free?</summary><p>Yes. GitLoom runs entirely in your browser and the site it makes is a static file. GitHub Pages, Netlify and Vercel all host static files for free.</p></details>
+        <details><summary>Does it need access to my GitHub account?</summary><p>No. It only reads public data through GitHub's API. If you make lots of changes and hit GitHub's hourly limit of 60 requests, you can add a token with no permissions in the studio to raise it to 5,000. The token stays in your browser.</p></details>
+        <details><summary>Will my site update when I push new code?</summary><p>The downloaded file is a snapshot, which keeps it fast and private. Download again whenever you want to refresh it, or share the live link from the studio, which always fetches the latest data.</p></details>
+        <details><summary>Can I edit the HTML afterwards?</summary><p>Yes. It's one readable file with the styles at the top and a small script at the bottom. Change anything you like.</p></details>
+        <details><summary>Can I use my own domain?</summary><p>Yes. Add a <code>CNAME</code> file to your Pages repository and point your domain at GitHub. GitHub's Pages settings explain each step.</p></details>
+      </div>
+    </section>
+
+    <!-- Closing CTA -->
+    <section class="closer">
+      <div class="closer-in">
+        <h2>Start weaving.</h2>
+        <form class="weave light" id="footForm" autocomplete="off">
+          <label class="weave-field">
+            <span class="pre">github.com/</span>
+            <input name="user" placeholder="your-username" spellcheck="false" aria-label="GitHub username" maxlength="39">
+          </label>
+          <button class="btn saffron" type="submit">Weave my site</button>
+        </form>
+      </div>
     </section>
   </main>
+
+  <footer class="foot">
+    <p>GitLoom by <a href="https://github.com/HemashreeVI" target="_blank" rel="noopener">Hemashree V. I.</a> Open source on <a href="https://github.com/HemashreeVI/GitLoom" target="_blank" rel="noopener">GitHub</a>.</p>
+    <p>Not affiliated with GitHub, Inc.</p>
+  </footer>
+
+  <script src="js/config.js"></script>
   <script src="js/landing.js"></script>
 </body>
 </html>
