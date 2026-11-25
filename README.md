@@ -6,6 +6,8 @@ Paste a GitHub username and GitLoom turns your public profile into a portfolio s
 
 No sign-up, no server, no build step. Everything runs in the browser.
 
+<p align="center"><a href="https://hemashreevi.github.io/GitLoom/"><img src="https://img.shields.io/badge/%E2%9C%A8_Try_it_live-paste_a_username-8FE3C8?style=for-the-badge&logo=googlechrome&logoColor=white" alt="%E2%9C%A8 Try it live-paste a username"></a></p>
+
 ## Features
 
 ### Pulled from GitHub
